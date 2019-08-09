@@ -1,0 +1,20 @@
+{
+    "manifest_version": 2,
+    "name": "RecentWatched",
+    "version" : "0.1",
+    "description" : "秋月電子のホームページに「最近見た商品」を追加します。",
+    "icons" : {
+        "48" : "./icon48.png"
+    },
+    "content_scripts" : [
+        {
+            "matches" : [
+                "http://akizukidenshi.com/*",
+                "https://akizukidenshi.com/*"
+            ],
+            "js" : [
+                "script.js"
+            ]
+        }
+    ]
+}
