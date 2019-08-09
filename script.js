@@ -59,12 +59,5 @@ window.onload  = function(){
         let target = document.querySelector("div#header table tbody");
         target.appendChild(label_cell);
         target.appendChild(list_cell);
-
     }
-}
-
-//--「最近閲覧した商品」リストの表示を更新
-function listupdate(page) {
-
-    
 }
