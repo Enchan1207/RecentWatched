@@ -21,6 +21,8 @@ Add a list of recently viewed products on akizukidenshi.com.
  4. Press `Install unpackaged extension` and select this folder to install it.
 
 ### On product page
-
+On product page(`http://akizukidenshi.com/catalog/g/*/`), product code is added to localStorage(`list`).  
 
 ### On home page
+On home page(`http://akizukidenshi.com/catalog/top.aspx`), the content of localStorage(`list`) is showed as "recent watched products"list.  
+Click each cell and jump to corresponding product codes page.
