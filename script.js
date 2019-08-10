@@ -1,4 +1,7 @@
+let page = 0, isfirstpage = true, islastpage = false; //リストページ
+
 window.onload  = function(){
+
     //--まず、商品ページなのかホームページなのかを調べる
     let regex = RegExp('.*/catalog/g/.*');
     let isProduct = regex.test(location.href);
@@ -47,15 +50,31 @@ window.onload  = function(){
         let list_cell = document.createElement("tr");
         let list_td = document.createElement("td");
         let list_div = document.createElement("div");
+        let list_pspan = document.createElement("span");
+        let list_nspan = document.createElement("span");
+        let list_pbutton = document.createElement("button");
+        let list_nbutton = document.createElement("button");
         let list_ul = document.createElement("ul");
-        
 
         list_td.setAttribute("colspan", "3");
-        list_div.setAttribute("style", "height:100px;test-align:center;background-color:#fff;margin:0px 0px 10px 0px;");
+        list_div.setAttribute("style", "height:100px;text-align:center;background-color:#fff;margin:0px 0px 10px 0px;");
         list_ul.setAttribute("id", "recentwatched"); //これで、selectorに#recentwatchedを渡すだけで一意に定められる
-        list_ul.setAttribute("style", "text-align:center;width:90%;margin:0 5%;");
+        list_ul.setAttribute("style", "display:inline-block;text-align:center;width:90%;");
 
+        list_pspan.setAttribute("style", "display:inline-block;width:3%;height:70%;margin-right:1%;");
+        list_nspan.setAttribute("style", "display:inline-block;width:3%;height:70%;margin-left:1%;");
+        list_pbutton.addEventListener( "click" , udlist_p , false );
+        list_nbutton.addEventListener( "click" , udlist_n , false );
+
+        list_pbutton.innerHTML = "◀︎";
+        list_nbutton.innerHTML = "▶︎";
+
+
+        list_pspan.appendChild(list_pbutton);
+        list_nspan.appendChild(list_nbutton);
+        list_div.appendChild(list_pspan);
         list_div.appendChild(list_ul);
+        list_div.appendChild(list_nspan);
         list_td.appendChild(list_div);
         list_cell.appendChild(list_td);
 
@@ -69,9 +88,21 @@ window.onload  = function(){
 }
 
 //--リストを更新する
-function udlist(page) {
+function udlist_n(){
+    if(!islastpage) page++;
+    udlist();
+}
+function udlist_p(){
+    if(!isfirstpage) page--;
+    udlist();
+}
+
+function udlist() {
+    isfirstpage = (page == 0);
+
     //--ulを取得
     let target = document.querySelector("ul#recentwatched");
+    target.innerHTML = "";
     
     //--lsを取得してパース
     let _pdlist = localStorage.getItem("list");
@@ -79,11 +110,20 @@ function udlist(page) {
     let pdlist = _pdlist.split(",");
     
     //--forで回して、ページ数に応じた範囲の商品を表示
-    for(let i = 0; i < 8; i ++){
-        if(pdlist[i]=="") break;
+    let point = 8;
+    for(let i = 0; i < point; i ++){
+        //--
+        if(pdlist[i + page * point]=="") {
+            islastpage = true;
+            break;
+        }else{
+            islastpage = false;
+        }
+
+        //--各セルを作成
         let cell = document.createElement("li");
         cell.setAttribute("style", "display:inline-block;width:100px;height:70px;background-color:#ccc;margin:15px 5px;");
-        cell.innerHTML = pdlist[i + page * 8];
+        cell.innerHTML = pdlist[i + page * point];
         target.appendChild(cell);
     }
 }
