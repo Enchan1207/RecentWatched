@@ -122,8 +122,21 @@ function udlist() {
 
         //--各セルを作成
         let cell = document.createElement("li");
+        let cell_icon = document.createElement("img");
+        let cell_label = document.createElement("span");
+        let cell_link = document.createElement("a");
+
         cell.setAttribute("style", "display:inline-block;width:100px;height:70px;background-color:#ccc;margin:15px 5px;");
-        cell.innerHTML = pdlist[i + page * point];
+        cell_link.setAttribute("href", "http://akizukidenshi.com/catalog/g/g" + pdlist[i + page * point] + "/");
+        cell_icon.setAttribute("src", "http://akizukidenshi.com/img/goods/L/" + pdlist[i + page * point] + ".jpg");
+        cell_icon.setAttribute("style", "height:70%;");
+        cell_label.setAttribute("style", "display:inline-block;height:30%;");
+        cell_label.innerHTML = pdlist[i + page * point];
+
+        cell_link.appendChild(cell_icon);
+        cell_link.appendChild(document.createElement("br"));
+        cell_link.appendChild(cell_label);
+        cell.appendChild(cell_link);
         target.appendChild(cell);
     }
 }
