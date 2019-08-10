@@ -28,7 +28,7 @@ window.onload  = function(){
 
         //--重複していなければ最後尾に追加して終わり
         if(rst == 1){
-            list = list + pdcode[1] + ",";
+            list = pdcode[1] + "," + list;
             localStorage.setItem("list", list);
         }
     }
@@ -68,7 +68,6 @@ window.onload  = function(){
 
         list_pbutton.innerHTML = "◀︎";
         list_nbutton.innerHTML = "▶︎";
-
 
         list_pspan.appendChild(list_pbutton);
         list_nspan.appendChild(list_nbutton);
@@ -126,7 +125,7 @@ function udlist() {
         let cell_label = document.createElement("span");
         let cell_link = document.createElement("a");
 
-        cell.setAttribute("style", "display:inline-block;width:100px;height:70px;background-color:#ccc;margin:15px 5px;");
+        cell.setAttribute("style", "display:inline-block;width:100px;height:70px;background-color:#f5f5f5;margin:15px 5px;");
         cell_link.setAttribute("href", "http://akizukidenshi.com/catalog/g/g" + pdlist[i + page * point] + "/");
         cell_icon.setAttribute("src", "http://akizukidenshi.com/img/goods/L/" + pdlist[i + page * point] + ".jpg");
         cell_icon.setAttribute("style", "height:70%;");
