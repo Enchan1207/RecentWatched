@@ -47,11 +47,15 @@ window.onload  = function(){
         let list_cell = document.createElement("tr");
         let list_td = document.createElement("td");
         let list_div = document.createElement("div");
+        let list_ul = document.createElement("ul");
+        
 
         list_td.setAttribute("colspan", "3");
         list_div.setAttribute("style", "height:100px;test-align:center;background-color:#fff;margin:0px 0px 10px 0px;");
-        list_div.setAttribute("id", "recentwatched"); //これで、selectorに#recentwatchedを渡すだけで一意に定められる
+        list_ul.setAttribute("id", "recentwatched"); //これで、selectorに#recentwatchedを渡すだけで一意に定められる
+        list_ul.setAttribute("style", "text-align:center;width:90%;margin:0 5%;");
 
+        list_div.appendChild(list_ul);
         list_td.appendChild(list_div);
         list_cell.appendChild(list_td);
 
@@ -59,5 +63,27 @@ window.onload  = function(){
         let target = document.querySelector("div#header table tbody");
         target.appendChild(label_cell);
         target.appendChild(list_cell);
+
+        udlist(0);
+    }
+}
+
+//--リストを更新する
+function udlist(page) {
+    //--ulを取得
+    let target = document.querySelector("ul#recentwatched");
+    
+    //--lsを取得してパース
+    let _pdlist = localStorage.getItem("list");
+    if(_pdlist == null) return false;
+    let pdlist = _pdlist.split(",");
+    
+    //--forで回して、ページ数に応じた範囲の商品を表示
+    for(let i = 0; i < 8; i ++){
+        if(pdlist[i]=="") break;
+        let cell = document.createElement("li");
+        cell.setAttribute("style", "display:inline-block;width:100px;height:70px;background-color:#ccc;margin:15px 5px;");
+        cell.innerHTML = pdlist[i + page * 8];
+        target.appendChild(cell);
     }
 }
