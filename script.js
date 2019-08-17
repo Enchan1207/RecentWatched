@@ -35,15 +35,27 @@ window.onload  = function(){
 
     //--ホームページならlocalstorageから呼び出してリストを生成し、トップバーの下に追加
     else{
+        //--
+        let addjs = document.createElement("script");
+        addjs.innerHTML = "function dellog(){\n\tif(confirm('履歴を削除しますか?')){\n\t\tlocalStorage.removeItem('list');\nlocation.reload();\n\t}\n}";
+        document.head.appendChild(addjs);
+
         //--ラベルを作る
         let label_cell = document.createElement("tr");
         let label_td = document.createElement("td");
+        let label_a = document.createElement("a");
 
         label_td.setAttribute("colspan", "3");
         label_td.setAttribute("class", "lineb");
         label_td.setAttribute("style", "text-align:center;font-size:1.2em;");
+        label_a.setAttribute("href", "javascript:void(0);");
+        label_a.setAttribute("onclick", "dellog();");
+        label_a.innerHTML = "[削除]";
+    
 
+        label_td.appendChild(label_a);
         label_cell.appendChild(label_td);
+
         label_td.innerHTML = "最近閲覧した商品 " + label_td.innerHTML;
 
         //--リストを作る
@@ -82,11 +94,11 @@ window.onload  = function(){
         target.appendChild(label_cell);
         target.appendChild(list_cell);
 
-        udlist(0);
+        udlist();
     }
 }
 
-//--リストを更新する
+//--リストページ遷移
 function udlist_n(){
     if(!islastpage) page++;
     udlist();
@@ -96,6 +108,7 @@ function udlist_p(){
     udlist();
 }
 
+//--リスト再描画
 function udlist() {
     isfirstpage = (page == 0);
 
